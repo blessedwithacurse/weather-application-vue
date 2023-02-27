@@ -5,9 +5,10 @@
         <span>Current Weather</span>
         <h5 class="location">{{ cityName ? cityName + ', ' + country : ''}}</h5>
       </div>
-      <p>
-        {{ temp ? 'Temperature: ' + Math.round(temp) + 'C&deg;' : ''}}
-      </p>
+      <div class="tempWrapper">
+        <p> {{ temp ? 'Temperature: ' + Math.round(temp) + 'C' : ''}}</p>
+        <p> {{ temp ? 'Temperature: ' + Math.round(temp * (9 / 5) + 32) + 'F' : ''}}</p>
+      </div>
       <p>
         {{ humidity ? 'Humidity: ' + Math.round(humidity) + '%' : ''}}
       </p>
@@ -34,12 +35,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
 import  SnowIcon  from '../../public/snowIcon.vue'
 import CloudIcon from '../../public/cloudIcon.vue'
 import RainIcon from '../../public/rainIcon.vue'
 import MistIcon from '../../public/mistIcon.vue'
 import ClearSkyIcon from '../../public/clearSkyIcon.vue'
+import TempUnitSwitcher from './TempUnitSwitcher.vue'
+import { useQuasar } from 'quasar'
 
 export default defineComponent ({
   name: 'WeatherCard',
@@ -48,7 +51,8 @@ export default defineComponent ({
     CloudIcon,
     ClearSkyIcon,
     MistIcon,
-    RainIcon
+    RainIcon,
+    TempUnitSwitcher
   },
   props: {
     temp: Number,
@@ -58,8 +62,10 @@ export default defineComponent ({
     country: String,
     weather: String
   },
-  setup() {
-    
+  setup(props) {
+    return {
+  
+    }
   }
 })
 
@@ -67,7 +73,7 @@ export default defineComponent ({
 
 <style scoped lang="scss">
 .q-card {
-  background-color: #E6E6E6;
+  // background-color: #E6E6E6;
   margin: 16px 50px;
   .card {
     height: 270px;
@@ -77,6 +83,12 @@ export default defineComponent ({
         border-bottom: 1px solid gray;
         margin-bottom:  25px;
         margin-top: 10px;
+      }
+    }
+    .tempWrapper {
+      display: flex;
+      p {
+        margin-right: 50px;
       }
     }
    

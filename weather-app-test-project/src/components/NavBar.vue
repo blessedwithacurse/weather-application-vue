@@ -30,8 +30,7 @@ export default defineComponent({
   min-height: 50px !important;
 }
   .header {
-    background-color: #E6E6E6;
-    color: #000033;
+    // color: #000033;
   }
   .icon-wrapper {
     display: flex;

@@ -68,15 +68,21 @@ export default defineComponent({
     }
 
     const fetchWeather = (val: string) => {
-      fetch(`${url_base}weather?q=${val.toLocaleLowerCase()}&units=metric&APPID=${api_key}`)
-      .then(async (response) => {
-        const data = await response.json()
-        weather.values = data.main
-        country.value = data.sys.country
-        city.value = data.name
-        weatherInfo.value = data.weather
-        console.log(weatherInfo.value)
-      })
+      try {
+        if (val) {
+          fetch(`${url_base}weather?q=${val.toLowerCase()}&units=metric&APPID=${api_key}`)
+          .then(async (response) => {
+          const data = await response.json()
+          weather.values = data.main
+          country.value = data.sys.country
+          city.value = data.name
+          weatherInfo.value = data.weather
+        })}
+      } catch(err) {
+        console.log(val)
+        console.log('error', err)
+      }
+     
     }
 
     return {
